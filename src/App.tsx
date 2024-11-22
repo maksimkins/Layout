@@ -1,11 +1,12 @@
 import React from "react";
-import { View } from "react-native";
 import { Root } from "./navigation/Root";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { styles } from "./styles";
 
 export const App = () => {
   return (
-    <View>
+    <SafeAreaProvider style={styles.container}>
         <Root/>
-    </View>
+    </SafeAreaProvider>
   )
 }
