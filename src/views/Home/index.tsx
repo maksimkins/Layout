@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaFrame, useSafeAreaInsets } from "react-native-safe-area-context";
 import { SearchBar } from "../../components/SearchBar";
 import { styles } from "./styles";
 import { MealList } from "../../components/MealList";
@@ -9,6 +9,8 @@ import { MealList } from "../../components/MealList";
 export const Home = () => {
     const [searchValue, setSearchValue] = useState('');
     const [meals, setMeals] = useState([]); 
+
+    const insets = useSafeAreaInsets();
 
     const handleChangeValue = (text: string) => { 
         setSearchValue(text);
@@ -27,7 +29,7 @@ export const Home = () => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, {marginBottom: insets?.bottom}]}>
             <SearchBar value={searchValue} onChangeValue={handleChangeValue} onSearch={handleSearch}/>
             <MealList meals={meals}/>
 
