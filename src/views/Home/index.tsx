@@ -4,11 +4,12 @@ import { SafeAreaView, useSafeAreaFrame, useSafeAreaInsets } from "react-native-
 import { SearchBar } from "../../components/SearchBar";
 import { styles } from "./styles";
 import { MealList } from "../../components/MealList";
+import { Meal } from "../../utils/types";
 
 
 export const Home = () => {
-    const [searchValue, setSearchValue] = useState('');
-    const [meals, setMeals] = useState([]); 
+    const [searchValue, setSearchValue] = useState<string>('');
+    const [meals, setMeals] = useState<Meal[]>([]); 
 
     const insets = useSafeAreaInsets();
 
@@ -21,7 +22,6 @@ export const Home = () => {
             const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`);
             const data = await response.json();
             setMeals(data?.meals ?? [])
-            
         } 
         catch (error) {
             console.warn(error);
@@ -32,8 +32,6 @@ export const Home = () => {
         <SafeAreaView style={[styles.container, {marginBottom: insets?.bottom}]}>
             <SearchBar value={searchValue} onChangeValue={handleChangeValue} onSearch={handleSearch}/>
             <MealList meals={meals}/>
-
-
         </SafeAreaView>
     )
 }

@@ -9,3 +9,8 @@ export interface Meal {
     strTags: string;
     strYoutube: string;
 }
+
+//Pick Omit
+// export interface ShortMeal extends Pick<Meal, 'strYoutube' | 'strMealThumb' | 'strDrinkAlternate'>{
+
+// }

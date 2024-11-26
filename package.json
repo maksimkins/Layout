@@ -13,6 +13,7 @@
     "@react-native-masked-view/masked-view": "^0.3.2",
     "@react-navigation/native": "^7.0.3",
     "@react-navigation/stack": "^7.0.5",
+    "lottie-react-native": "^7.1.0",
     "react": "18.3.1",
     "react-native": "0.76.1",
     "react-native-country-flag": "^2.0.2",
