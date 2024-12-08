@@ -13,6 +13,7 @@ interface Props {
 export const SearchBar: React.FC<Props> = ({value, onChangeValue, onSearch}) => {
 
     const inputRef = useRef<TextInput>(null);
+    const viewRef = useRef<View>(null);
     
     const onClear = () => {
         onChangeValue('')
@@ -21,20 +22,26 @@ export const SearchBar: React.FC<Props> = ({value, onChangeValue, onSearch}) => 
     
     return (
         <View style={styles.container}>
-            <View style={styles.inputContainer}>
-                <TextInput ref={inputRef} style={styles.input} placeholderTextColor={Colors.grayDark} placeholder="Search..." value={value} onChangeText={onChangeValue}/>
+            <View ref={viewRef} style={styles.inputContainer}>
+                <TextInput 
+                    ref={inputRef} 
+                    style={styles.input} 
+                    placeholderTextColor={Colors.grayDark} 
+                    placeholder="Search..." value={value} 
+                    onChangeText={onChangeValue}
+                    onFocus={() => viewRef.current?.setNativeProps({borderColor: Colors.yellow})}
+                    onBlur={() => viewRef.current?.setNativeProps({borderColor: Colors.purple})}
+                />
                 {!!value.length ? <Pressable onPress={onClear}>
                     <Clear width={24} height={24} fill={Colors.yellow}/>
                 </Pressable> : null}
             </View>
-            
-            
-         
-            <Pressable style={styles.pressable} onPress={onSearch}>
+            <Pressable disabled={value.length < 2} style={[styles.pressable, 
+            {
+                backgroundColor: value.length < 2 ? Colors.purple : Colors.yellow
+            }]} onPress={onSearch}>
                 <SearchIcon width={24} height={24} fill={Colors.white}/>
             </Pressable>
- 
-            
         </View>
     )
 }
@@ -74,7 +81,6 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         height: 48,
         borderWidth: 2,
-        borderColor: Colors.yellow,
+        borderColor: Colors.purple,
     }
-
 })

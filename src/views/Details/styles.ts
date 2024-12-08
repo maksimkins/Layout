@@ -1,5 +1,6 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Colors } from "../../utils/colors";
+;
 
 export const styles = StyleSheet.create({
     list: {
@@ -19,6 +20,7 @@ export const styles = StyleSheet.create({
         color: Colors.white,
         fontSize: 40,
         fontWeight: '600',
+        lineHeight: 40,
     },
 
     textCategory: {
@@ -27,6 +29,36 @@ export const styles = StyleSheet.create({
 
     headerInfo: {
         padding: 16,
-    }
+        borderTopWidth: 4,
+        borderTopColor: Colors.yellow,
+    },
+
+    link: {
+        textDecorationLine:'underline',
+        color: Colors.blue,
+
+    },
+
+    linkButton: {
+        padding: 16,
+    },
+
+    instructions: {
+        padding: 16,
+    },
+
+    textInstructions: {
+        color: Colors.white,
+    },
+
+    title: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 10,
+    },
+
+    textTags: {
+        color: Colors.blue,
+    },
 })
 

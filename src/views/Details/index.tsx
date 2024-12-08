@@ -1,11 +1,13 @@
 import { useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView, Image, Text } from "react-native";
+import { StyleSheet, View, ScrollView, Image, Text, Pressable, Linking } from "react-native";
 import { IngredientKey, IngredientsMeal, Meal, MeasureKey, Range, Recipe } from "../../utils/types";
 import { LoaderWrap } from "../../components/LoaderWrap";
 import { styles } from "./styles";
 import { RecipeList } from "./components/RecipeList";
 import { mapTags } from "../../utils/helpers";
+import CountryFlag from "react-native-country-flag";
+import { nationalityToCountryCode } from "../../utils/constants";
 
 
 export const Details = () => {
@@ -43,17 +45,30 @@ export const Details = () => {
         fetchDetails(route.params?.idMeal)
         // @ts-ignore
     }, [route.params?.idMeal])
-  
+    
+    const handleLink = () => {
+        Linking.openURL(details?.strYoutube ?? '');
+    }
+    console.log(details?.strArea)
     return (
         <LoaderWrap isLoading={isLoading}>
             <ScrollView contentContainerStyle={styles.listContent} style={styles.list}>
                 <Image style={styles.image} source={{ uri: details?.strMealThumb}}/>
                 <View style={styles.headerInfo}>
-                    <Text style={styles.textMeal}>{details?.strMeal}</Text>
+                    <View style={styles.title}>
+                        <Text style={styles.textMeal}>{details?.strMeal}</Text>
+                        <CountryFlag isoCode={nationalityToCountryCode[details?.strArea ?? '']} size={32} />
+                    </View>
                     <Text style={styles.textCategory}>{details?.strCategory}</Text>
-                    {/* <Text style={styles.textTags} >{mapTags(details?.strTags ?? '')}</Text> */}
+                    <Text style={styles.textTags} >{mapTags(details?.strTags ?? '')}</Text>
                 </View>
                 <RecipeList recipes={recipes}/>
+                <View style={styles.instructions}>
+                    <Text style={styles.textInstructions}>{details?.strInstructions}</Text>
+                </View>
+                <View style={styles.linkButton}>
+                    <Text style={styles.textInstructions}>Watch instructions: <Text onPress={handleLink} style={styles.link}>{details?.strYoutube}</Text> </Text>
+                </View>
             </ScrollView>
         </LoaderWrap>
     )

@@ -10,6 +10,9 @@ interface Props {
 export const RecipeList: React.FC<Props> = ({recipes}) => {
     return (
         <View style={styles.container}>
+
+            
+
             <Text style={styles.header}>Recipes</Text>
             {recipes.map((item, index) => {
                 return (
