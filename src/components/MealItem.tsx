@@ -9,8 +9,9 @@ import { useNavigation } from "@react-navigation/native";
 import HeartIcon from '../assets/icons/heart.svg';
 import HeartFilledIcon from '../assets/icons/heart-filled.svg';
 import ArrowRightIcon from '../assets/icons/arrow-right.svg';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { favoriteSlice } from "../views/Favorites/slice";
+import { RootState } from "../redux/store";
 
 
 interface Props extends Meal {
@@ -21,9 +22,13 @@ export const MealItem: React.FC<Props> = (props) => {
     const navigation = useNavigation();
     //@ts-ignore
     const onNavigate = (idMeal) => navigation.navigate('Details', {idMeal});
-
+    const ids = useSelector((state: RootState) => state.favorites.ids);
     const dispatch = useDispatch();
 
+    const inFavotites = (id: string) => ids.includes(id); 
+    const onFavorites = (id: string) => {
+        inFavotites(id) ? dispatch(favoriteSlice.actions.deleteFavorites(props.idMeal)) : dispatch(favoriteSlice.actions.addFavorites(props.idMeal));
+    }
     
     return (
         <View style={styles.container}>
@@ -39,8 +44,9 @@ export const MealItem: React.FC<Props> = (props) => {
                 <Text style={styles.textTags} >{mapTags(props.strTags)}</Text>
             </View>
             <View style={styles.rightAccessories}>
-                <Pressable hitSlop={{top: 8, bottom: 8, left: 20, right: 8}} onPress={() => dispatch(favoriteSlice.actions.addFavorites(props.idMeal))}>
-                    <HeartIcon width={24} height={24} fill={props.borderColor}/>
+                <Pressable hitSlop={{top: 8, bottom: 8, left: 20, right: 8}} onPress={() => onFavorites(props.idMeal)}>
+                    {inFavotites(props.idMeal) ? <HeartFilledIcon width={24} height={24} fill={props.borderColor}/>
+                    : <HeartIcon width={24} height={24} fill={props.borderColor}/>}
                 </Pressable>
 
                 <Pressable hitSlop={{top: 8, bottom: 8, left: 20, right: 8}} onPress={() => onNavigate(props.idMeal)}>

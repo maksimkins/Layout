@@ -60,5 +60,18 @@ export const styles = StyleSheet.create({
     textTags: {
         color: Colors.blue,
     },
+
+    heart: {
+        position: 'absolute',
+        bottom: 10,
+        left: 10,
+    },
+
+    arrow: {
+        position: 'absolute',
+        top: 10, 
+        left: 10, 
+        zIndex: 2, 
+    }
 })
 

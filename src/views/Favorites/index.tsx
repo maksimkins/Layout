@@ -3,18 +3,23 @@ import { Text, View } from "react-native";
 import { styles } from "./styles"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { MealList } from "../../components/MealList";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const Favorites = () => {
     const [meals, setMeals] = useState([]); 
     const dispatch = useDispatch();
     const ids = useSelector((state: RootState) => state.favorites.ids);
 
-    useEffect(() => {
-        Promise.all(ids.map((id) => fetchFavorites(id))).then((values) => {
-            //@ts-ignore
-            setMeals(values);
-          });
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            Promise.all(ids.map((id) => fetchFavorites(id))).then((values) => {
+                //@ts-ignore
+                setMeals(values);
+              });
+              console.log("ids")
+        }, [ids])
+      );
 
     const fetchFavorites = async (id: string) => {
         try 
@@ -29,11 +34,9 @@ export const Favorites = () => {
         }
     } 
     
-
     return (
         <View style={styles.container}>
-            {//@ts-ignore
-            meals?.map((item) => <Text>{item?.strMeal}</Text>) }
+            <MealList meals={meals}/>
         </View>
     )
 } 
